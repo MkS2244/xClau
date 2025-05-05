@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER}"]
+      interval: 10s
+      retries: 5
+    networks:
+      - appnet
+
+  backend:
+    build:
+      context: ./backend
+    volumes:
+      - ./backend:/var/www
+    env_file:
+      - ./.env
+    depends_on:
+      - db
+    ports:
+      - "8000:9000"
+    networks:
+      - appnet
+
+  frontend:
+    build:
+      context: ./frontend
+      target: dev
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    ports:
+      - "3000:3000"
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    networks:
+      - appnet
+
+volumes:
+  db_data:
+
+networks:
+  appnet:
+    driver: bridge
