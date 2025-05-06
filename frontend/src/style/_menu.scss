@@ -1,0 +1,23 @@
+@mixin reset-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+@mixin menuHorizontal {
+    ul {
+        @include reset-list;
+        li {
+            display: inline-block;
+            margin: $default-margin;
+            padding: 0.5em;
+            font: $menu;
+            a {
+                text-decoration: none;
+                &:hover {
+                    color: $verdeOscuro
+                }
+            }
+        }
+    }
+}

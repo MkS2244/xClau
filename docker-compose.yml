@@ -31,9 +31,10 @@ services:
     depends_on:
       - db
     ports:
-      - "8000:9000"
+      - "8000:8000"
     networks:
       - appnet
+    command: php artisan serve --host=0.0.0.0 --port=8000
 
   frontend:
     build:

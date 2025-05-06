@@ -1,0 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+
+$default-margin: 0;
+$default-padding: 0;
+
+$font-family: 'Nunito', sans-serif;
+
+$peso_cuerpo: 400;
+$peso_titulo: 700;
+$peso_pie: 300;
+
+$size_cuerpo: 1rem;
+$cuerpo: $peso_cuerpo $size_cuerpo $font-family;
+
+$h1: $peso_titulo $size_cuerpo*3 $font-family;
+$h2: $peso_titulo $size_cuerpo*2 $font-family;
+$h3: $peso_titulo $size_cuerpo*1.5 $font-family;
+
+$menu: $peso_titulo $size_cuerpo*1.1 $font-family;
+$pie: $peso_pie $size_cuerpo*0.8 $font-family;

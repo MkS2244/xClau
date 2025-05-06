@@ -1,0 +1,34 @@
+@import 'colors';
+@import 'variables';
+@import 'menu';
+
+nav{
+    a{
+        text-decoration: none;
+        color: $verdeClaro;
+
+        &hover, &active, &visited{
+            text-decoration: none;
+            
+        }
+    }
+
+    ul{
+        list-style: none;
+    }
+
+    text-align: center;
+    padding: 0.1rem;
+    margin: 0.5rem 0 0 0;
+    text-transform: uppercase; 
+    @include menuHorizontal;
+}
+
+.nav-wrapper{
+    background-color: $contraste;
+}
+
+.logo{
+    width: 10rem;
+    
+}
