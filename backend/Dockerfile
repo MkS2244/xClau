@@ -6,50 +6,51 @@ ENV COMPOSER_ALLOW_SUPERUSER=1 \
 
 RUN apk update \
  && apk add --no-cache \
-      ## bibliotecas de runtime (necesarias para cargar las extensiones)
+      # Bibliotecas de runtime
       libpng \
       freetype \
       libjpeg-turbo \
       icu-libs \
       libxml2 \
       libzip \
-      postgresql-libs \
       oniguruma \
+      mariadb-dev \
       curl \
       git \
       unzip \
  \
-      ## libs + headers para compilar extensiones
+      # Librerías de desarrollo
       libpng-dev \
       freetype-dev \
       libjpeg-turbo-dev \
       icu-dev \
       libxml2-dev \
       libzip-dev \
-      postgresql-dev \
       oniguruma-dev \
 # Configura gd
  && docker-php-ext-configure gd \
       --with-freetype=/usr/include/ \
       --with-jpeg=/usr/include/ \
-# Compila e instala las extensiones
+# Compila e instala las extensiones de PHP
  && docker-php-ext-install \
-      pdo_pgsql pdo mbstring exif pcntl bcmath gd zip xml intl \
-# Limpia sólo los headers y libs de desarrollo
+      pdo_mysql pdo mbstring exif pcntl bcmath gd zip xml intl \
+# Limpia sólo las librerías de desarrollo
  && apk del \
       libpng-dev freetype-dev libjpeg-turbo-dev \
       icu-dev libxml2-dev libzip-dev \
-      postgresql-dev oniguruma-dev \
-# Limpia cache apk
+      oniguruma-dev \
+# Limpia caché de apk
  && rm -rf /var/cache/apk/*
 
 WORKDIR /var/www
 
-# Trae composer
+# Copia composer desde la imagen oficial
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
+# Copia el proyecto
 COPY . .
 
+# Instala dependencias de Laravel
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader \
  && chown -R www-data:www-data /var/www \
  && chmod -R 755 /var/www/storage

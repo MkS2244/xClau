@@ -2,16 +2,18 @@ version: '3.8'
 
 services:
   db:
-    image: postgres:15-alpine
+    image: mysql:8.0
     restart: unless-stopped
     environment:
-      POSTGRES_USER: ${DB_USER}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_DB: ${DB_NAME}
+       MYSQL_DATABASE: xclau # Nombre de la base de datos
+       MYSQL_ROOT_PASSWORD: secret # Contraseña del root (simple para desarrollo)
+       MYSQL_USER: xclau_user # Usuario estándar (opcional)
+       MYSQL_PASSWORD: secret # Contraseña del usuario estándar
     ports:
-      - "5434:5432"
+      - "3306:3306" # Exponer MySQL en el puerto 3306 host (acceso desde host/DBeaver)
+    container_name: xclau_db
     volumes:
-      - db_data:/var/lib/postgresql/data
+      - db_data:/var/lib/mysql
     env_file:
       - ./.env
     healthcheck:
@@ -28,6 +30,7 @@ services:
       - ./backend:/var/www
     env_file:
       - ./.env
+    container_name: xclau_backend
     depends_on:
       - db
     ports:
@@ -43,10 +46,12 @@ services:
     volumes:
       - ./frontend:/app
       - /app/node_modules
+    container_name: xclau_frontend
     ports:
       - "3000:3000"
     environment:
       - CHOKIDAR_USEPOLLING=true
+    command: npm run dev
     networks:
       - appnet
 

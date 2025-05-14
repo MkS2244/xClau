@@ -1,0 +1,18 @@
+{
+  "src/assets/Logo.webp": {
+    "file": "assets/Logo-DOpbwMtb.webp",
+    "src": "src/assets/Logo.webp"
+  },
+  "src/index.html": {
+    "file": "assets/index-DThesAIt.js",
+    "name": "index",
+    "src": "src/index.html",
+    "isEntry": true,
+    "css": [
+      "assets/index-CGwkZJAt.css"
+    ],
+    "assets": [
+      "assets/Logo-DOpbwMtb.webp"
+    ]
+  }
+}

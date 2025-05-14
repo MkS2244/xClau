@@ -1,18 +1,19 @@
 # frontend/Dockerfile
+
 # Etapa dev
-FROM node:20-alpine AS dev
+FROM node:20-bullseye AS dev
 WORKDIR /app
 COPY package.json ./
+COPY package-lock.json ./
 RUN npm install
 COPY . .
 EXPOSE 3000
-CMD ["npm", "run","dev"]
+CMD ["npm", "run", "dev"]
 
 # Etapa build
-FROM node:20-alpine AS build
+FROM node:20-bullseye AS build
 WORKDIR /app
-COPY package.json ./
-# RUN npm install --omit=dev
+COPY package.json ./ package-lock.json ./
 RUN npm ci --omit=dev
 COPY . .
 RUN npm run build
