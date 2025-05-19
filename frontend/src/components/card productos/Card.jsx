@@ -1,5 +1,4 @@
 const Card = () => {
-
     
     return (
         <section className="col-md-9">

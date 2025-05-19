@@ -30,6 +30,7 @@ class EnsureFrontendRequestAreStateful
             'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
+        'role' => \App\Http\Middleware\RoleMiddleware::class,
         // ...
     ];
 }
