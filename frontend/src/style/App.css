@@ -2,6 +2,11 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
+*{
+  font-family: 'Montserrat', sans-serif;
+}
+
+
 nav {
   text-align: center;
   justify-content: center;
@@ -9,16 +14,15 @@ nav {
   padding: 0.1rem;
   margin: 0.5rem 0 0 0;
   text-transform: uppercase;
-  font-family: 'Montserrat', sans-serif;
   font-size: 1.25rem;
   background-color: #BAD19E;
 }
 
-.bg-footer{
+.bg-footer {
   background-color: #F29792;
 }
 
-.colorH2{
+.colorH2 {
   color: #30734C;
   text-align: center;
   padding: 1rem;
@@ -39,7 +43,7 @@ nav {
   color: #F29792;
 }
 
-.borde{
+.borde {
   border: 1px solid black;
 }
 
@@ -48,11 +52,11 @@ nav {
   margin-left: 16rem;
 } */
 
-.imgProduct{
+.imgProduct {
   width: 10rem;
 }
 
-.user-container{
+.user-container {
   padding: 1rem;
   margin-left: 18rem;
   /* gap: 2rem; */
@@ -64,9 +68,58 @@ nav {
   transition: all ease 0.1s;
 }
 
-.user-icon:active{
+.user-icon:active {
   transform: translateY(5px) scale(1.1);
 }
+
+.btn-login {
+  background-color: #BAD19E;
+  color: #54552f;
+  border-radius: .5rem;
+  border: 1px solid #54552f;
+  padding: .2rem 1.2rem;
+  font-size: 1.2rem;
+  display: block;
+  margin: 2rem auto 0 auto;
+  /* min-width: 100px; */
+  text-align: center;
+}
+
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-login {
+  width: 100%;
+  max-width: 400px;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 16px #54552f;
+  background: #fafafa;
+}
+
+.spinner {
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  width: 56px;
+  height: 56px;
+  border: 11.2px #54552f double;
+  border-left-style: solid;
+  border-radius: 50%;
+  animation: spinner-aib1d7 0.75s infinite linear;
+}
+
+@keyframes spinner-aib1d7 {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
 
 /* nav ul {
   margin: 0;
@@ -81,3 +134,16 @@ nav {
   font: 700 1.1rem "Nunito", sans-serif;
 } */
 
+.products-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .products-section {
+    padding: 0 0.5rem;
+  }
+}

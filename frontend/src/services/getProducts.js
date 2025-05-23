@@ -5,15 +5,17 @@ export function getProducts(){
     return fetch(API_URL)
         .then(response => response.json())
         .then(data => {
-            console.log("GETPRODUCTS DATA", data)
+            // console.log("GETPRODUCTS DATA", data)
 
             return data.map( product => ({
                 id: product.id,
                 nombre: product.nombre,
-                descripcion: product.descripcion,
                 precio: product.precio,
-                img: product.imagen,
-                stock: product.stock
+                imagen: product.imagen
             }))
         })
+        .catch(error => {
+            console.error("Error fetching product data:", error);
+            throw error; 
+        });
 }

@@ -9,7 +9,7 @@ const useProducts = () =>{
     const [productos, setProductos] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    console.log("useProducts hook", productos)
+    // console.log("useProducts hook", productos)
 
     function obtenerProductos(){
         // buscando los productos

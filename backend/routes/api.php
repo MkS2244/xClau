@@ -1,6 +1,8 @@
 <?
 
+use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\ProductoController;
+use App\Http\Controllers\API\OrderController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
@@ -9,7 +11,6 @@ use Tqdev\PhpCrudApi\Api;
 use Tqdev\PhpCrudApi\Config\Config;
 
 Route::prefix('v1')->group(function () {
-
     Route::apiResource('productos', ProductoController::class);
     Route::get('{tabla}/count', function ($tabla) {
         return response()->json([
@@ -22,6 +23,20 @@ Route::prefix('v1')->group(function () {
     Route::get('/test', function(){
         return 'OK';
     });
+
+    // Rutas de autenticación
+    Route::post('/register', [AuthController::class, 'register']);
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
+
+    // Rutas protegidas para pedidos
+    Route::middleware(['auth:sanctum', 'role:user,admin'])->group(function () {
+        // Solo usuarios autenticados pueden crear pedidos y ver los suyos
+        Route::post('/orders', [OrderController::class, 'store']);
+        Route::get('/orders', [OrderController::class, 'index']);
+    });
+    // Solo admin puede ver todos los pedidos
+    Route::middleware(['auth:sanctum', 'role:admin'])->get('/orders/all', [OrderController::class, 'indexAll']);
 });
 
 Route::any('/{any}', function (ServerRequestInterface $request) {
