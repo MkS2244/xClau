@@ -2,7 +2,6 @@
 import { useState, useEffect } from 'react';
 import { getProducts } from '../services/getProducts';
 
-
 const useProducts = () =>{
 
     // estado para almacenar los productos y el estado de carga

@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
 
         Model::unguard();
         Schema::disableForeignKeyConstraints();
+
         User::factory(10)->create();
         $this->call(ProductosTableSeeder::class);
         $this->command->info('Tabla productos creada con éxito! :)');

@@ -3,12 +3,14 @@
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\ProductoController;
 use App\Http\Controllers\API\OrderController;
+use App\Http\Controllers\API\FavoriteController;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
 use Psr\Http\Message\ServerRequestInterface;
 use Tqdev\PhpCrudApi\Api;
 use Tqdev\PhpCrudApi\Config\Config;
+use Illuminate\Http\Request;
 
 Route::prefix('v1')->group(function () {
     Route::apiResource('productos', ProductoController::class);
@@ -37,6 +39,19 @@ Route::prefix('v1')->group(function () {
     });
     // Solo admin puede ver todos los pedidos
     Route::middleware(['auth:sanctum', 'role:admin'])->get('/orders/all', [OrderController::class, 'indexAll']);
+
+    // Rutas protegidas de favoritos
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::get('/favorites', [FavoriteController::class, 'index']);
+        Route::post('/favorites', [FavoriteController::class, 'store']);
+        Route::delete('/favorites/{product_id}', [FavoriteController::class, 'destroy']);
+    });
+
+    // Para comprobar si un email ya existe
+    Route::get('/user-exists', function (Request $request) {
+        $exists = User::where('email', $request->query('email'))->exists();
+        return response()->json(['exists' => $exists]);
+    });
 });
 
 Route::any('/{any}', function (ServerRequestInterface $request) {

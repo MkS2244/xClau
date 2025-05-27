@@ -1,22 +1,18 @@
-import { useState } from "react"
 import { getToken } from "../services/getToken"
 
 const useToken = () => {
 
-    const [error, setError] = useState(null)
+    const login = async (email, password) => {
 
-    const login = async (email, password) =>{
-        setError(null)
-
-        try{
+        try {
             const data = await getToken(email, password)
             return data
-        } catch (e){
-            setError(e.message || 'Error de autenticación')
+        } catch (e) {
+            throw new Error(e.message)
             return null
         }
     }
 
-    return { login, error}
+    return { login }
 }
 export default useToken

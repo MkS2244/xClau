@@ -1,79 +1,27 @@
-/* import fotoPrueba from '../../assets/Logo.webp' */
-// ---------------
-// CUSTOM HOOKS
-// ---------------
-import useProducts from "../../hooks/useProducts";
+// ------- CUSTOM HOOKS --------
+import useProducts from "../../hooks/useProducts"
+import { useFavorites } from '../../hooks/useFavorites'
 
-// ---------------
-// SERVICIOS
-// ---------------
-import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+// ------- SERVICIOS --------
+import { Link } from "react-router-dom"
 
-// ---------------
-// COMPONENTES
-// ---------------
-import ProductCard from "../card productos/productCard";
-import Spinner from "../spinner/Spinner";
+// ------- COMPONENTES --------
+import ProductCard from "../card productos/productCard"
+import Spinner from "../spinner/Spinner"
 
-// ------------
-// React-Bootstrap
-// ------------
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-// import CardGroup from 'react-bootstrap/CardGroup';
+// ------- REACT-BOOTSTRAP --------
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
 
 
 const Products = () => {
 
     // Utilizamos el custom hook `useProducts` para obtener los productos 
     const { productos, loading } = useProducts()
-
-    // Estado para manejar los favoritos
-    const [fav, setFav] = useState([])
-
-    function manejarFavoritos() {
-        const favGuardados = JSON.parse(localStorage.getItem('favoritos')) || []
-
-        setFav(favGuardados)
-    }
-
-    // se ejecuta la función manejarFavoritos al cargar la página
-    useEffect(manejarFavoritos, [])
-
-
-    function eliminarFav(productoID) {
-        // filtro los favoritos para que no se muestre el producto eliminado
-        return fav.filter(favorito => favorito !== productoID)
-    }
-
-    function añadirFav(productoID) {
-        let favoritos = [...fav, productoID]
-        // agrego el producto a la lista de favoritos
-
-        return favoritos
-    }
-
-    function manejarClickFav(productoID) {
-        setFav(preFav => {
-            // utilizo el setFav con preFav para obtener el estado anterior de los favoritos
-            // y poder modificarlo según el producto que se haya hecho click
-
-            let newFav
-
-            if (preFav.includes(productoID)) {
-                // si el producto ya está en favoritos, lo elimino
-                newFav = eliminarFav(productoID)
-            } else {
-                // si el producto no está en favoritos, lo añado
-                newFav = añadirFav(productoID)
-            }
-            // actualizo el estado de los favoritos
-            setFav(newFav)
-            // guardo en localStorage los favoritos
-            localStorage.setItem('favoritos', JSON.stringify(newFav))
-        })
-    }
+    // Obtenemos el token de acceso del localStorage
+    const token = localStorage.getItem('access_token');
+    // Utilizamos el custom hook `useFavorites` para manejar los favoritos
+    const { favorites, toggleFavorite } = useFavorites(token);
 
     function mostrarCard(producto) {
         return (
@@ -86,12 +34,11 @@ const Products = () => {
                         precio={producto.precio}
                         producto={producto}
                         descripcion={producto.descripcion}
-                        manejarFavoritos={manejarClickFav}
-                        listaFavoritos={fav}
+                        manejarFavoritos={toggleFavorite}
+                        listaFavoritos={favorites}
                     />
                 </Link>
             </Col>
-
         )
     }
 

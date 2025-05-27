@@ -1,8 +1,7 @@
 // ----- PAGINAS -----
 import Home from './pages/Home/Home'
 import Details from './pages/Details/Details'
-import Register from './pages/User/Register'
-import Login from './pages/User/Login'
+import LoginRegister from './pages/User/LoginRegister'
 
 // ----- RUTAS -----
 import { Route, Routes } from 'react-router-dom'
@@ -19,8 +18,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path='/detalle/:id' element={<Details />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/register' element={<Register />} />
+          <Route path='/login' element={<LoginRegister />} />
         </Routes>
         {/* <Footer /> */}
       </Container>

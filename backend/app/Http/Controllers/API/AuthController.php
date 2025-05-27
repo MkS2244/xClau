@@ -19,6 +19,7 @@ class AuthController extends Controller
             'email' => 'required|email|unique:users',
             'password' => 'required|string|min:6',
             'role' => 'required|string',
+            'apellidos' => 'required|string|max:255'
         ]);
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
@@ -28,6 +29,7 @@ class AuthController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => $request->role,
+            'apellidos' => $request->apellidos
         ]);
         $token = $user->createToken('auth_token')->plainTextToken;
         return response()->json([

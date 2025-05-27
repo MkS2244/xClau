@@ -22,7 +22,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role'
+        'role',
+        'apellidos'
     ];
 
     /**
@@ -58,5 +59,9 @@ class User extends Authenticatable
     public function isAdmin()
     {
         return $this->role === 'admin';
+    }
+    public function favorites()
+    {
+        return $this->belongsToMany(Producto::class, 'favorites', 'user_id', 'product_id');
     }
 }
